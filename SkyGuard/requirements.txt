@@ -1,0 +1,4 @@
+PyQt6>=6.6.0
+python-nmap>=0.7.1
+requests>=2.31.0
+google-generativeai>=0.8.0

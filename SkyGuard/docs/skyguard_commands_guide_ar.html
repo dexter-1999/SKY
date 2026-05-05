@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>دليل أوامر SkyGuard</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 16mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: #172033;
+      font-family: Tahoma, Arial, "Segoe UI", sans-serif;
+      line-height: 1.75;
+      font-size: 13px;
+    }
+
+    .cover {
+      border: 1px solid #d9e2ef;
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 22px;
+      background: linear-gradient(135deg, #eff6ff, #ffffff 58%, #ecfeff);
+    }
+
+    .brand {
+      color: #0f62fe;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 0;
+      margin: 0 0 6px;
+    }
+
+    .subtitle {
+      color: #475569;
+      font-size: 15px;
+      margin: 0 0 16px;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .meta div,
+    .note,
+    .warning {
+      border: 1px solid #d9e2ef;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #ffffff;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #0f172a;
+      line-height: 1.35;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 20px 0 12px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 22px 0 10px;
+      border-bottom: 2px solid #dbeafe;
+      padding-bottom: 5px;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin: 16px 0 8px;
+    }
+
+    p {
+      margin: 0 0 8px;
+    }
+
+    code,
+    pre {
+      direction: ltr;
+      text-align: left;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      background: #0b1220;
+      color: #e5edf8;
+      border-radius: 10px;
+      padding: 11px 13px;
+      margin: 8px 0 12px;
+      border: 1px solid #1e293b;
+      font-size: 11.5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px;
+      page-break-inside: avoid;
+    }
+
+    th,
+    td {
+      border: 1px solid #d9e2ef;
+      padding: 8px 9px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eff6ff;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    td.command {
+      direction: ltr;
+      text-align: left;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 11px;
+      color: #0f172a;
+      background: #f8fafc;
+      width: 42%;
+    }
+
+    .note {
+      background: #f8fafc;
+      margin: 10px 0 14px;
+    }
+
+    .warning {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      margin: 10px 0 14px;
+    }
+
+    .small {
+      color: #64748b;
+      font-size: 11.5px;
+    }
+
+    ul {
+      margin: 6px 0 12px;
+      padding-right: 22px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <p class="brand">SkyGuard</p>
+    <p class="subtitle">دليل أوامر التشغيل والفحص: ماذا استخدمنا، ولماذا استخدمناه</p>
+    <p>
+      هذا الملف يشرح الأوامر التي استُخدمت أثناء تجهيز تطبيق SkyGuard وتشغيله وتطوير فحص Nmap.
+      الهدف أن تكون قادرًا على فهم كل أمر بدل تشغيله كأمر غامض، وأن تعرف الفرق بين الفحص السريع والفحص الأدق.
+    </p>
+    <div class="meta">
+      <div><strong>المشروع:</strong> SkyGuard - Security Scanner</div>
+      <div><strong>المنصة:</strong> Windows + Python + PyQt6 + Nmap</div>
+      <div><strong>نوع الفحص:</strong> فحص حقيقي باستخدام برنامج Nmap المثبت على النظام</div>
+      <div><strong>المخرجات:</strong> جداول نتائج + تقرير أمني قابل للتصدير</div>
+    </div>
+  </section>
+
+  <h1>1. أوامر تجهيز وتشغيل التطبيق</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>الأمر</th>
+        <th>لماذا استخدمناه؟</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="command">pip install -r requirements.txt</td>
+        <td>
+          يثبت مكتبات Python المطلوبة لتشغيل SkyGuard مثل PyQt6 للواجهة، وpython-nmap للتعامل مع Nmap،
+          وrequests لفحص الدومينات، وgoogle-generativeai للتقرير الذكي.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">python main.py</td>
+        <td>
+          يشغل تطبيق SkyGuard. ملف <code>main.py</code> هو نقطة الدخول التي تفتح واجهة PyQt6.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">.\.venv\Scripts\python.exe main.py</td>
+        <td>
+          يشغل التطبيق باستخدام البيئة الافتراضية الخاصة بالمشروع. هذا أفضل من الاعتماد على Python عام في النظام،
+          لأن كل المكتبات تكون مثبتة داخل المشروع نفسه.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">python -m compileall .</td>
+        <td>
+          استخدمناه كاختبار سريع للتأكد أن ملفات Python لا تحتوي أخطاء تركيبية تمنع التشغيل.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>مهم:</strong> مكتبة <code>python-nmap</code> لا تكفي وحدها. يجب أن يكون برنامج Nmap نفسه مثبتًا على Windows،
+    لأن المكتبة فقط ترسل الأوامر إلى <code>nmap.exe</code> وتقرأ النتائج.
+  </div>
+
+  <h1>2. أوامر تثبيت واكتشاف Nmap</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>الأمر</th>
+        <th>الشرح</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="command">winget install -e --id Insecure.Nmap</td>
+        <td>
+          يثبت Nmap من مدير الحزم winget. استخدمنا <code>-e</code> للمطابقة الدقيقة لاسم الحزمة.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">winget install -e --id Insecure.Nmap --accept-source-agreements --accept-package-agreements</td>
+        <td>
+          نفس أمر التثبيت، لكن مع قبول الاتفاقيات بشكل غير تفاعلي حتى لا يتوقف الأمر عند سؤال داخل الطرفية.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">Get-Command nmap</td>
+        <td>
+          يتحقق هل أمر <code>nmap</code> متاح مباشرة من PowerShell عبر متغير <code>PATH</code>.
+          عندك لم يكن متاحًا، لذلك التطبيق لم يجده أولًا.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">C:\Program Files (x86)\Nmap\nmap.exe --version</td>
+        <td>
+          يتحقق من أن Nmap مثبت فعلًا ويعرض رقم الإصدار. النتيجة عندك أظهرت Nmap 7.99.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1>3. أمر الفحص الحقيقي الذي اختبرناه</h1>
+  <pre>C:\Program Files (x86)\Nmap\nmap.exe -sV --version-light -T4 -Pn --top-ports 100 192.168.1.1</pre>
+  <p>
+    هذا هو فحص Nmap الحقيقي الذي أثبت أن النتائج ليست وهمية. الفحص رجّع أن الجهاز
+    <code>192.168.1.1</code> يعمل ووجد منافذ مفتوحة مثل 25 و110 و143 و465 و587 و993 و995.
+  </p>
+
+  <h2>شرح خيارات الأمر</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>الخيار</th>
+        <th>معناه</th>
+        <th>سبب استخدامه</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="command">-sV</td>
+        <td>تفعيل كشف الخدمة والإصدار.</td>
+        <td>حتى لا نعرف فقط أن المنفذ مفتوح، بل نحاول معرفة نوع الخدمة مثل SMTP أو HTTP.</td>
+      </tr>
+      <tr>
+        <td class="command">--version-light</td>
+        <td>كشف إصدارات أخف وأسرع.</td>
+        <td>يسرع الفحص مقارنة بـ <code>--version-all</code> مع المحافظة على معلومات مفيدة.</td>
+      </tr>
+      <tr>
+        <td class="command">-T4</td>
+        <td>توقيت أسرع للفحص.</td>
+        <td>مناسب للشبكات المحلية غالبًا، ويقلل وقت الانتظار.</td>
+      </tr>
+      <tr>
+        <td class="command">-Pn</td>
+        <td>اعتبار الهدف موجودًا بدون الاعتماد على ping.</td>
+        <td>بعض الراوترات والجدران النارية تمنع ping، فيظهر الهدف كأنه غير موجود رغم أنه يعمل.</td>
+      </tr>
+      <tr>
+        <td class="command">--top-ports 100</td>
+        <td>فحص أكثر 100 منفذ شيوعًا.</td>
+        <td>يعطي نتيجة أسرع من فحص كل المنافذ، ومفيد كبداية عملية.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warning">
+    <strong>تحذير Npcap:</strong> ظهر عندك تحذير أن Nmap لم يستطع تحميل كل وظائف Npcap.
+    هذا لا يعني أن الفحص وهمي؛ Nmap استخدم وضع <code>connect()</code>. لكن تحديث Npcap يحسن الدقة والقدرات على Windows.
+  </div>
+
+  <h1 class="page-break">4. أوضاع الفحص الجديدة داخل SkyGuard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>الوضع</th>
+        <th>الأمر الداخلي</th>
+        <th>متى تستخدمه؟</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Fast</strong></td>
+        <td class="command">-sT -sV --version-light -T4 -Pn --top-ports 100 --max-retries 2</td>
+        <td>للحصول على نتيجة سريعة وفحص أولي للشبكة أو الراوتر.</td>
+      </tr>
+      <tr>
+        <td><strong>Balanced</strong></td>
+        <td class="command">-sT -sV --version-light -T3 -Pn --top-ports 1000 --max-retries 3</td>
+        <td>للتوازن بين السرعة والدقة، ويفحص منافذ أكثر.</td>
+      </tr>
+      <tr>
+        <td><strong>Accurate</strong></td>
+        <td class="command">-sT -sV --version-all -T3 -Pn --top-ports 1000 --max-retries 3</td>
+        <td>عندما تريد معلومات أدق عن الخدمات والإصدارات، لكنه أبطأ.</td>
+      </tr>
+      <tr>
+        <td><strong>Full TCP</strong></td>
+        <td class="command">-sT -sV --version-light -T3 -Pn -p 1-65535 --max-retries 2</td>
+        <td>لفحص كل منافذ TCP. استخدمه فقط عند الحاجة لأنه قد يستغرق وقتًا طويلًا.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>خيارات إضافية مهمة</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>الخيار</th>
+        <th>المعنى</th>
+        <th>السبب</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="command">-sT</td>
+        <td>TCP Connect scan.</td>
+        <td>أكثر توافقًا على Windows، خصوصًا عند وجود مشكلة أو نقص في Npcap.</td>
+      </tr>
+      <tr>
+        <td class="command">--max-retries 2</td>
+        <td>تقليل عدد إعادة المحاولة.</td>
+        <td>يزيد السرعة، خصوصًا عندما تكون المنافذ filtered ولا ترد.</td>
+      </tr>
+      <tr>
+        <td class="command">--max-retries 3</td>
+        <td>إعادة محاولات أكثر قليلًا.</td>
+        <td>يزيد موثوقية الفحص في الوضع المتوازن أو الدقيق.</td>
+      </tr>
+      <tr>
+        <td class="command">-p 25,80,443</td>
+        <td>فحص منافذ محددة فقط.</td>
+        <td>أسرع طريقة عندما تعرف المنافذ التي تريد اختبارها.</td>
+      </tr>
+      <tr>
+        <td class="command">-p 1-1000</td>
+        <td>فحص نطاق منافذ.</td>
+        <td>مفيد عندما تريد فحص نطاق معين بدل كل منافذ TCP.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1>5. أوامر إصلاح البيئة الافتراضية</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>الأمر</th>
+        <th>لماذا استخدمناه؟</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="command">.\.venv\Scripts\python.exe -m ensurepip --upgrade</td>
+        <td>
+          أصلحنا به <code>pip</code> داخل البيئة الافتراضية لأن جزءًا منه كان مفقودًا،
+          وظهر خطأ <code>ModuleNotFoundError: No module named 'pip._internal.utils'</code>.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">.\.venv\Scripts\python.exe -m pip install -r requirements.txt</td>
+        <td>
+          ثبتنا المتطلبات داخل <code>.venv</code> حتى يعمل التطبيق بنفس البيئة التي يستخدمها VS Code.
+        </td>
+      </tr>
+      <tr>
+        <td class="command">.\.venv\Scripts\python.exe -c "from core.scanner import NetworkScanner; ..."</td>
+        <td>
+          اختبار مباشر لمحرك الفحص بدون فتح الواجهة. استخدمناه للتأكد أن الكود يستدعي Nmap الحقيقي ويقرأ النتائج.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1>6. كيف تختار الفحص المناسب؟</h1>
+  <ul>
+    <li><strong>تريد نتيجة بسرعة؟</strong> استخدم Fast.</li>
+    <li><strong>تريد فحصًا يوميًا جيدًا؟</strong> استخدم Balanced.</li>
+    <li><strong>تريد دقة أعلى في الخدمات والإصدارات؟</strong> استخدم Accurate.</li>
+    <li><strong>تبحث عن منفذ غير شائع؟</strong> استخدم Full TCP أو اكتب نطاقًا مخصصًا في خانة Ports.</li>
+    <li><strong>تريد اختبار منافذ محددة؟</strong> اكتبها مثل <code>25,80,443</code> وسيستخدم SkyGuard هذه المنافذ بدل قائمة top ports.</li>
+  </ul>
+
+  <h1>7. ملاحظات أمنية مهمة</h1>
+  <div class="note">
+    <p>
+      SkyGuard لا يفترض وجود ثغرة بدون دليل. وجود منفذ مفتوح يعني أن هناك خدمة يمكن مراجعتها،
+      لكنه لا يعني تلقائيًا أن الجهاز مخترق أو أن الخدمة ضعيفة.
+    </p>
+    <p>
+      التحليل الصحيح يعتمد على: المنفذ، الخدمة، الإصدار، هل الخدمة مكشوفة للإنترنت أم داخل الشبكة،
+      وهل توجد سياسات وصول أو جدار ناري.
+    </p>
+  </div>
+
+  <p class="small">
+    تم إنشاء هذا الدليل لمشروع SkyGuard المحلي. استخدم الفحص فقط على أجهزتك أو الشبكات التي تملك إذنًا قانونيًا لفحصها.
+  </p>
+</body>
+</html>
